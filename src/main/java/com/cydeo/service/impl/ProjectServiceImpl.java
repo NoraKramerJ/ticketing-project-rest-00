@@ -105,7 +105,7 @@ public class ProjectServiceImpl implements ProjectService {
         SimpleKeycloakAccount details=(SimpleKeycloakAccount) authentication.getDetails();
         String username=details.getKeycloakSecurityContext().getToken().getPreferredUsername();
 
-        UserDTO currentUserDTO = userService.findByUserName("harold@manager.com");
+        UserDTO currentUserDTO = userService.findByUserName(username);
 
         User user = userMapper.convertToEntity(currentUserDTO);
 
