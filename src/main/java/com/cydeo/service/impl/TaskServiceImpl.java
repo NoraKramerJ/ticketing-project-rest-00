@@ -133,7 +133,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> listAllTasksByStatus(Status status) {
 
-        UserDTO loggedInUser = userService.findByUserName("john@employee.com");
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        SimpleKeycloakAccount details=(SimpleKeycloakAccount) authentication.getDetails();
+        String username=details.getKeycloakSecurityContext().getToken().getPreferredUsername();
+        UserDTO loggedInUser = userService.findByUserName(username);
+
 
         List<Task> tasks = taskRepository.
                 findAllByTaskStatusAndAssignedEmployee(status, userMapper.convertToEntity(loggedInUser));
